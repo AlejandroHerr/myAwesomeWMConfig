@@ -1,0 +1,9 @@
+[submodule "vendor/lain"]
+	path = vendor/lain
+	url = https://github.com/copycat-killer/lain.git
+[submodule "lib/soundtastic"]
+	path = lib/soundtastic
+	url = https://github.com/AlejandroHerr/soundtastic.git
+[submodule "vendor/tyrannical"]
+	path = vendor/tyrannical
+	url = https://github.com/Elv13/tyrannical.git
