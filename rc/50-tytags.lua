@@ -1,10 +1,22 @@
+function findScreen(target)
+  for s in screen do
+    for key,value in pairs(s.outputs) do
+      if target == key then
+        return screen[target].index
+      end
+    end
+  end
+  return nil
+end
+
 tyrannical.tags = {
     {
         name        = " ⌘ Term",                 -- Call the tag "Term"
         init        = true,                   -- Load the tag on startup
         exclusive   = true,                   -- Refuse any other type of clients (by classes)
         layout      = awful.layout.suit.tile, -- Use the tile layout
-        screen      = 1,
+        screen      = findScreen('eDP1') or 1,
+        force_screen = true,
         instance    = {"dev", "ops"},         -- Accept the following instances. This takes precedence over 'class'
         class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
             "xterm" ,"urxvtc", "urxvt" , "aterm","URxvt","XTerm","konsole","terminator","gnome-terminal"
@@ -16,9 +28,9 @@ tyrannical.tags = {
         name = " Fs",
         init        = true,
         exclusive   = true,
-        -- screen      = screen['DP1'] or screen['eDP1'],
+        screen      = {findScreen('eDP1') or 1,findScreen('DP1') or 1},
         layout      = awful.layout.suit.tile,
-        --exec_once   = {"dolphin"}, --When the tag is accessed for the first time, execute this command
+        --exec_once   = {"pcmanfm"}, --When the tag is accessed for the first time, execute this command
         class  = {
             "Thunar", "Konqueror", "Dolphin", "ark", "Nautilus","emelfm", "pcmanfm", "Pcmanfm", "spacefm"
 
@@ -28,7 +40,8 @@ tyrannical.tags = {
         name = " ⌥ Dev",
         init        = true,
         exclusive   = true,
-        --screen      = screen['DP1'] or screen['eDP1'],
+        screen      = {findScreen('DP1') or 1,findScreen('eDP1') or 1},
+        force_screen = true,
         layout      = awful.layout.suit.max                          ,
         class ={ 
             "Kate", "KDevelop", "Codeblocks", "Code::Blocks" , "DDD", "kate4", "subl3"
@@ -37,6 +50,7 @@ tyrannical.tags = {
     {
         name        = " 🌐 www",
         init        = true,
+        screen      = findScreen('DP1') or 1,
         --screen      = screen['DP1'] or screen['eDP1'],
       --icon        = "~net.png",                 -- Use this icon for the tag (uncomment with a real path)
         layout      = awful.layout.suit.max,      -- Use the max layout
@@ -50,7 +64,7 @@ tyrannical.tags = {
         exclusive   = true,
         screen      = 1,
         --screen      = screen['DP1'] or screen['eDP1'],
-        exec_once   = {"dolphin"}, --When the tag is accessed for the first time, execute this command
+     --   exec_once   = {"dolphin"}, --When the tag is accessed for the first time, execute this command
         class  = {
             "Thunar", "Konqueror", "Dolphin", "ark", "Nautilus","emelfm"
         }
@@ -70,11 +84,11 @@ tyrannical.tags = {
 }
 
 -- Ignore the tag "exclusive" property for the following clients (matched by classes)
-tyrannical.properties.intrusive = {
+--[[tyrannical.properties.intrusive = {
     "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
     "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
     "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
-}
+}]]--
 
 -- Ignore the tiled layout for the matching clients
 tyrannical.properties.floating = {
